@@ -5,7 +5,7 @@ members = [".", "codegen-exports", "codegen"]
 name = "include-flate"
 version = "0.1.4"
 authors = ["SOFe <sofe2038@gmail.com>"]
-edition = "2018"
+edition = "2021"
 license = "Apache-2.0"
 repository = "https://github.com/SOF3/include-flate.git"
 homepage = "https://github.com/SOF3/include-flate"
@@ -15,8 +15,8 @@ keywords = ["compression", "deflate", "macro", "include", "assets"]
 
 [dependencies]
 include-flate-codegen-exports = { version = "0.1.4", path = "codegen-exports" }
-lazy_static = "1.3"
-libflate = "1.0.0"
+lazy_static = "1.4.0"
+libflate = "1.1.2"
 
 [badges]
 travis-ci = {repository = "SOF3/include-flate"}
