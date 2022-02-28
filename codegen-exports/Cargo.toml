@@ -10,7 +10,7 @@ description = "Macro codegen for the include-flate crate"
 
 [dependencies]
 include-flate-codegen = { version = "0.1.4", path = "../codegen" }
-proc-macro-hack = "0.5.9"
+proc-macro-hack = "0.5.19"
 
 [features]
 stable = ["include-flate-codegen/stable"]
