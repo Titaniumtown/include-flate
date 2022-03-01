@@ -26,7 +26,7 @@
 //! which might be undesirable if the data are too large.
 //! An actual installer is still required if the binary involves too many resources that do not need to be kept in RAM all time.
 
-use libflate::deflate;
+use xz2::read::XzDecoder as Decoder;
 
 /// The low-level macros used by this crate.
 pub use include_flate_codegen_exports as codegen;
@@ -112,7 +112,7 @@ macro_rules! flate {
 pub fn decode(bytes: &[u8]) -> Vec<u8> {
     use std::io::{Cursor, Read};
 
-    let mut dec = deflate::Decoder::new(Cursor::new(bytes));
+    let mut dec = Decoder::new(Cursor::new(bytes));
     let mut ret = Vec::new();
     dec.read_to_end(&mut ret)
         .expect("Compiled DEFLATE buffer was corrupted");

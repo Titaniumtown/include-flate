@@ -21,7 +21,7 @@ use std::fs::File;
 use std::path::PathBuf;
 use std::str::from_utf8;
 
-use libflate::deflate::Encoder;
+use xz2::write::XzEncoder as Encoder;
 use proc_macro::TokenStream;
 use proc_macro2::Span;
 use quote::quote;
@@ -83,7 +83,7 @@ fn inner(ts: TokenStream, utf8: bool) -> Result<impl Into<TokenStream>> {
 
     let mut file = File::open(target).map_err(emap)?;
 
-    let mut encoder = Encoder::new(Vec::<u8>::new());
+    let mut encoder = Encoder::new(Vec::<u8>::new(), 9);
     if utf8 {
         use std::io::Write;
 
@@ -95,9 +95,9 @@ fn inner(ts: TokenStream, utf8: bool) -> Result<impl Into<TokenStream>> {
         // no need to store the raw buffer; let's avoid storing two buffers
         std::io::copy(&mut file, &mut encoder).map_err(emap)?;
     }
-    let bytes = encoder.finish().into_result().map_err(emap)?;
+    // let bytes = encoder.finish().into_result().map_err(emap)?;
 
-    let bytes = LitByteStr::new(&bytes, Span::call_site());
+    let bytes = LitByteStr::new(&encoder.finish().unwrap(), Span::call_site());
     let result = quote!(#bytes);
 
     Ok(result)
